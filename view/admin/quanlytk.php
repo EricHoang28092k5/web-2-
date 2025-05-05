@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['tenNguoiDung'])){
-  header("location: dangnhap.php");
+  header("location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ if(!isset($_SESSION['tenNguoiDung'])){
               src="../img/DMTD-Food-Logo.jpg"
               alt=""
             />
-            <h4 style="white-space: unset">Nguyễn Tấn Dũng</h4>
+            <h4 style="white-space: unset"><?php echo $_SESSION['tenNguoiDung'];?></h4>
             Chào mừng bạn trở lại
           </div>
         </div>
@@ -119,7 +119,7 @@ if(!isset($_SESSION['tenNguoiDung'])){
                         echo $a[0];
                         
                         ?></td>
-                        <td><?php echo $row['diaChi']." ".$row['phuong_xa']." ".$row['quan_huyen'];?></td>
+                        <td><?php echo $row['diaChi'].", ".$row['phuong_xa'].", ".$row['quan_huyen'];?></td>
                        <td> 
                         <a href="Xoanguoidung.php?this_id=<?php echo $row['id_nguoidung']; ?>&this_tt=<?php echo $row['TrangThai']; ?>"; class="chucnang" ><?php 
                         if($row['TrangThai']==1){

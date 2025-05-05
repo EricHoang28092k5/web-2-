@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['tenNguoiDung'])){
-  header("location: dangnhap.php");
+  header("location: index.php");
 }
 ?>
 <style>
@@ -38,7 +38,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   padding: 10px;
   background: #f37319;
   color: white;
-  min-width: 50px;
+  width: 50px;
   text-align: center;
 }
 
@@ -126,7 +126,7 @@ ob_start();
                                 }
                                 $thisid=$_GET['this_id'];
                                 if(!isset($_GET['this_id'])){
-                                  header("location: dangnhap.php");
+                                  header("location: index.php");
                                 }
                                 $sql="SELECT * FROM nguoidung WHERE id_nguoidung='$thisid'";
 $hoten;
@@ -259,6 +259,9 @@ window.onload = function () {
       <input class="input-field" type="text" placeholder="Địa chỉ" name="diaChi" value="<?php echo $diachi; ?>" required>
     </div>
   </div>
+  <div class="input-container">
+  <div class="input-row">
+  <i class="fa fa-map icon"></i>
   <select class="input-field" id="quan_huyen" name="quan_huyen" onchange="updateHuyen()" required>
   <option value="">Chọn quận/huyện</option>
   <option value="Quận 1" <?php if ($quan == "Quận 1") echo "selected"; ?>>Quận 1</option>
@@ -282,13 +285,16 @@ window.onload = function () {
   <option value="Huyện Củ Chi" <?php if ($quan == "Huyện Củ Chi") echo "selected"; ?>>Huyện Củ Chi</option>
   <option value="Huyện Nhà Bè" <?php if ($quan == "Huyện Nhà Bè") echo "selected"; ?>>Huyện Nhà Bè</option>
 </select>
-
+</div>
+</div>
   <!-- Thêm select cho Phường -->
   <div class="input-container">
+  <div class="input-row">
     <i class="fa fa-map-pin icon"></i>
     <select class="input-field" id="phuong_xa" name="phuong_xa" required>
       <option value="">Chọn phường/xã</option>
     </select>
+  </div>
   </div>
   <input type="submit" value="Xác nhận" name="signUp">
   <div class="links">

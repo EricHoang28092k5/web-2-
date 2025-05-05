@@ -216,7 +216,7 @@ function showLoginErrorModal(message) {
       </div>
       <div class="modal_body">
         <p>${message}</p>
-        <a href="dangnhap.php">Thử lại</a>
+        <a href="index.php">Thử lại</a>
       </div>
     </div>
   `;

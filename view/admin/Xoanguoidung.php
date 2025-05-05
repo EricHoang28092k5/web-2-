@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['tenNguoiDung'])){
-  header("location: dangnhap.php");
+  header("location: index.php");
 }
 ?>
 <?php 
@@ -11,7 +11,7 @@ if (!$conn) {
  die("Lỗi: Không thể kết nối MySQL.");
 }
 if(!isset($_GET['this_id'])){
-  header("location: dangnhap.php");
+  header("location: index.php");
 }
 $thisid=$_GET['this_id'];
 $trangthai=$_GET['this_tt'];

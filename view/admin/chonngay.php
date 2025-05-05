@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['tenNguoiDung'])){
-  header("location: dangnhap.php");
+  header("location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ if(!isset($_SESSION['tenNguoiDung'])){
               src="../img/DMTD-Food-Logo.jpg"
               alt=""
             />
-            <h4 style="white-space: unset">Nguyễn Tấn Dũng</h4>
+            <h4 style="white-space: unset"><?php echo $_SESSION['tenNguoiDung'];?></h4>
             Chào mừng bạn trở lại
           </div>
         </div>

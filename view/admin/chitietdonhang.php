@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['tenNguoiDung'])){
-  header("location: dangnhap.php");
+  header("location: index.php");
 }
 ?>
 <?php
@@ -9,7 +9,7 @@ $id=$_GET['thisid'];
 $from=$_GET['from'];
 $to=$_GET['to'];
 if(!isset($_GET['thisid'])){
-  header("location: dangnhap.php");
+  header("location: index.php");
 }
 include "../../model/thuvien.php";
 $conn = ketnoidb();

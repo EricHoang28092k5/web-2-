@@ -1,5 +1,4 @@
 <?php
-<?php
                                 include "../../model/thuvien.php";
 
 $conn = ketnoidb();
@@ -37,30 +36,34 @@ if(isset($_POST['signUp'])){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
-
-.container{
-    background-color: #ffff;
-    width: 450px;
-    padding: 1.5rem;
-    margin: 50px auto;
-    border-radius: 10px;
-    box-shadow: 0 20px 35px rgba(0,0,1,0.5);
+body {
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
 }
 
-.container h2{
-    font: size 1.5rem;  
-    font-weight:bold;
-    text-align:center;
-    padding: 1.3rem;
-    margin-top:0.1rem;
-    margin-bottom:0.2rem;
+.container {
+  background-color: #fff;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  margin: 50px auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #f37319;
 }
 
 .input-container {
-  display: flex; 
   display: flex;
+  align-items: center;
   width: 100%;
   margin-bottom: 15px;
 }
@@ -69,66 +72,85 @@ body {font-family: Arial, Helvetica, sans-serif;}
   padding: 10px;
   background: #f37319;
   color: white;
-  min-width: 50px;
+  min-width: 45px;
   text-align: center;
+  border-radius: 5px 0 0 5px;
 }
 
 .input-field {
   width: 100%;
-  padding: 10px;
-  outline: none;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  transition: 0.3s;
 }
 
 .input-field:focus {
-  border: 2px solid black;
+  border-color: #f37319;
+  outline: none;
+}
+
+select.input-field {
+  cursor: pointer;
+  background-color: white;
 }
 
 input[type=submit] {
   background-color: #f37319;
   color: white;
-  padding: 15px 20px;
+  padding: 15px;
   border: none;
   cursor: pointer;
   width: 100%;
-  opacity: 0.9;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-input[type=submit]  {
-  opacity: 1;
+input[type=submit]:hover {
+  background-color: #d65a00;
 }
 
 .social {
-  text-align:center;
+  text-align: center;
+  margin-top: 1.5rem;
 }
-.social i{
-  color: #F37319;
+
+.social i {
+  color: #f37319;
   padding: 0.8rem 1.5rem;
-  border-radius:10px;
-  font-size:1.5rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
   cursor: pointer;
   border: 2px solid #dfe9f5;
-  margin:0 15px;
-  
-}
-.social i:hover{
-  font-size:1.6rem;
-  border:2px solid #F37319;
-  transition:1s;
+  margin: 0 10px;
+  transition: all 0.3s ease;
 }
 
-.links{
-    display:flex;
-    justify-content:center;
-    padding:0 4rem;
-    margin-top:0.3rem;
-    font-weight:bold;
+.social i:hover {
+  font-size: 1.6rem;
+  border-color: #f37319;
 }
 
+.links {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.8rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
 
-.links a:hover{
-    cursor: pointer;
-    text-decoration:underline;
-    color: red;
+.links a {
+  color: #f37319;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+  color: red;
 }
 
 .back {
@@ -136,20 +158,15 @@ input[type=submit]  {
   padding: 10px 30px;
   font-size: 15px;
   margin: 0 5px;
-  text-decoration: none; 
+  text-decoration: none;
   color: black;
-  font-weight:5px;
   text-align: center;
   border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 .back:hover {
-  text-decoration: none;
-  background: #b0b0b0; 
-}
-
-select.input-field {
-  cursor: pointer;
+  background: #d0d0d0;
 }
 
 </style>
