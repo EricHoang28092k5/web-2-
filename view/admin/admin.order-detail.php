@@ -82,8 +82,25 @@ if(!$result0 || mysqli_num_rows($result0) == 0){
       <!-- Content -->
       <div class="content">
         <main>
-          <div class="title">
+          <div class="title" style="display: flex; justify-content: space-between; align-items: center;">
             <h2>Chi tiết đơn hàng</h2>
+            <a href="./admin.order.php" style="text-decoration: none;">
+              <button style="
+                padding: 8px 16px;
+                background-color: orange;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                margin-right: 10px;
+                transition: background-color 0.3s ease;
+              " 
+              onmouseover="this.style.backgroundColor='orange'" 
+              onmouseout="this.style.backgroundColor='orange'">
+                Quay lại
+              </button>
+            </a>
           </div>
 
           <div class="main-content">

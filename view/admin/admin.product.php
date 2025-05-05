@@ -90,6 +90,16 @@ if(!isset($_SESSION['tenNguoiDung'])){
 
             <div class="ListProduct" style="width: 100%">
               <table class="table">
+                <?php
+                  include "../../model/thuvien.php";
+                  $conn = ketnoidb();
+                  $sql123 = "SELECT * FROM sanpham";
+                  $result123 = $conn->query($sql123);
+
+                  if ($result123->num_rows === 0) {
+                    echo '<div style="text-align:center"><h1>Không có sản phẩm nào</h1></div>';
+                  } else {
+                ?>
                 <thead>
                   <tr>
                     <th>Mã sản phẩm</th>
@@ -102,9 +112,6 @@ if(!isset($_SESSION['tenNguoiDung'])){
                 </thead>
                 <tbody>
                   <?php 
-                    include "../../model/thuvien.php";
-                    $conn = ketnoidb();
-
                     $sql = "SELECT * FROM sanpham";
                     $result = mysqli_query($conn, $sql);
                     
@@ -141,6 +148,7 @@ if(!isset($_SESSION['tenNguoiDung'])){
                     </tr>
                   <?php } ?>
                 </tbody>
+                <?php } ?>
               </table>
             </div>
           </div>
