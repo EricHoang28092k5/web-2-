@@ -18,12 +18,18 @@ if(isset($_POST['signUp'])){
     $checkEmail = "SELECT * FROM nguoidung where email = '$email'";
     $result = $conn->query($checkEmail);
     
+    $checkUserName = "SELECT * FROM nguoidung where tenDangNhap = '$tenDangNhap'";
+    $resultUsername = $conn->query($checkUserName);
 
     if($result->num_rows>0){
       // echo "<script>alert('Tài khoản đã được đăng ký!');</script>";
       $loginError = true;
       $errorMessage = "Tài khoản đã tồn tại";
-    }else{
+    }else if( $resultUsername->num_rows>0){
+      $loginError = true;
+      $errorMessage = "Tên đăng nhập đã có người sử dụng";
+    }
+    else{
       $emailExists = false;
       $insertQuery = "INSERT INTO nguoidung(tenNguoiDung, tenDangNhap, email, password, sdt, diaChi, quan_huyen, phuong_xa) 
       VALUES('$tenNguoiDung','$tenDangNhap','$email','$password','$sdt','$diaChi','$quan_huyen','$phuong_xa')";      

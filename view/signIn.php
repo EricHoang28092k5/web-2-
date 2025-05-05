@@ -43,7 +43,7 @@ if(isset($_POST['signIn'])){
         $_SESSION['quan_huyen'] = $row['quan_huyen'];
         $_SESSION['phuong_xa'] = $row['phuong_xa'];
         $_SESSION['role'] = "admin";
-        header("location:admin/quanlytk.php");
+        header("location:adminhome.php");
       }
     }else{
       // Account is locked error
