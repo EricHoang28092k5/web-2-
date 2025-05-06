@@ -32,6 +32,7 @@ if(isset($_POST['signIn'])){
         $_SESSION['diaChi'] = $row['diaChi'];
         $_SESSION['quan_huyen'] = $row['quan_huyen'];
         $_SESSION['phuong_xa'] = $row['phuong_xa'];
+        $_SESSION['role'] = "user";
         header("location:../controller/index.php");
       }else if($row["vaiTro"] == "admin"){
         $_SESSION['tenNguoiDung'] = $row['tenNguoiDung'];

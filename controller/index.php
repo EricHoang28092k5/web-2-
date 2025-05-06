@@ -4,14 +4,20 @@ session_start();
 $isLoggedIn = isset($_SESSION['tenDangNhap']);
 
 if($isLoggedIn){
-  $tenNguoiDung = $_SESSION['tenNguoiDung'];
-  $tenDangNhap = $_SESSION['tenDangNhap']; 
-  $email = $_SESSION['email']; 
-  $password = $_SESSION['password'];
-  $sdt = $_SESSION['sdt'];
-  $diaChi = $_SESSION['diaChi'];
-  $quan_huyen = $_SESSION['quan_huyen'];
-  $phuong_xa = $_SESSION['phuong_xa'];
+$vaiTro = $_SESSION['role'];
+if($vaiTro == "admin"){
+    session_destroy();
+    header("location: ../controller/index.php");
+}else{
+    $tenNguoiDung = $_SESSION['tenNguoiDung'];
+    $tenDangNhap = $_SESSION['tenDangNhap']; 
+    $email = $_SESSION['email']; 
+    $password = $_SESSION['password'];
+    $sdt = $_SESSION['sdt'];
+    $diaChi = $_SESSION['diaChi'];
+    $quan_huyen = $_SESSION['quan_huyen'];
+    $phuong_xa = $_SESSION['phuong_xa'];
+  }
 }
 
 if(!isset($_SESSION['giohang'])){
