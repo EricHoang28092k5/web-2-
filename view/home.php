@@ -814,6 +814,21 @@ if ($min_price > 0 || $max_price < 500000) {
 }
 // gpt 
 
+// Xây dựng điều kiện tìm kiếm
+$where = "WHERE TrangThai = 1"; // Đảm bảo luôn có điều kiện mặc định
+
+if (!empty($search)) {
+    $where .= " AND TenSP LIKE '%$search%'";
+}
+
+if ($min_price > 0 || $max_price < 500000) {
+    $where .= " AND DonGia BETWEEN $min_price AND $max_price";
+}
+
+if ($maLoaiSP > 0) {
+    $where .= " AND MaLoaiSP = $maLoaiSP";
+}
+
 // Nếu có lọc theo loại sản phẩm
 if ($maLoaiSP > 0) {
     if (!empty($where)) {
@@ -825,10 +840,12 @@ if ($maLoaiSP > 0) {
 
 
 // Số sản phẩm trên mỗi trang
+// Số sản phẩm trên mỗi trang
 $item_perpage = !empty($_GET['per_page']) ? (int)$_GET['per_page'] : 8;
 $current_page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($current_page - 1) * $item_perpage;
 
+// Truy vấn sản phẩm
 // Truy vấn sản phẩm
 $sql = "SELECT * FROM sanpham $where ORDER BY MaSP DESC LIMIT $item_perpage OFFSET $offset";
 $result = mysqli_query($conn, $sql);
@@ -996,9 +1013,8 @@ if (empty($search) && $maLoaiSP == 0 && $min_price == 0 && $max_price == 0): ?>
 <ul class="products">
     <?php if (!empty($products)): ?>
         <?php foreach ($products as $product): ?>
-            <?php if ($product['TrangThai'] == 1): // Kiểm tra trạng thái sản phẩm ?>
-                <div class="products-item">
-                  <li>
+            <div class="products-item">
+                <li>
                     <div class="product-top">
                         <a href="javascript:void(0)" class="product-thumb" onclick="openProductDetail(<?= $product['MaSP'] ?>)">
                             <img src="../view/img/product/<?= htmlspecialchars($product['HinhAnh']) ?>" alt="<?= htmlspecialchars($product['TenSP']) ?>">
@@ -1019,9 +1035,8 @@ if (empty($search) && $maLoaiSP == 0 && $min_price == 0 && $max_price == 0): ?>
                             <input type="submit" name="addcart" value="Đặt hàng">
                         </form>
                     </div>
-                  </li>
-                </div>
-            <?php endif; ?>
+                </li>
+            </div>
         <?php endforeach; ?>
     <?php else: ?>
         <p>Không có sản phẩm nào!</p>
