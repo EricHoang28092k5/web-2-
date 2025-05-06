@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['tennguoidung'])){
+  header("location: index.php");
+}
                                 include "../../model/thuvien.php";
 
 $conn = ketnoidb();
