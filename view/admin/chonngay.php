@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['tenNguoiDung'])){
+if(!isset($_SESSION['tennguoidung'])){
   header("location: index.php");
 }
 ?>
@@ -33,7 +33,7 @@ if(!isset($_SESSION['tenNguoiDung'])){
               src="../img/DMTD-Food-Logo.jpg"
               alt=""
             />
-            <h4 style="white-space: unset"><?php echo $_SESSION['tenNguoiDung'];?></h4>
+            <h4 style="white-space: unset"><?php echo $_SESSION['tennguoidung'];?></h4>
             Chào mừng bạn trở lại
           </div>
         </div>
