@@ -60,8 +60,15 @@ if(isset($_GET['act'])){
                         $sp=[$id,$hinh,$tensp,$gia,$soluong];
                         $_SESSION['giohang'][]=$sp;
                     }
+                    // Lưu tên sản phẩm đã thêm vào session để hiển thị trong thông báo
+                    $_SESSION['added_product'] = $tensp;
+                    
+                    // Chuyển hướng đến trang chủ với thông báo
+                    header("Location: ../controller/index.php?cartAdded=true");
+                    exit();
                 }
             }
+
             include "../view/home.php";
             break;
         case 'thanhtoan':

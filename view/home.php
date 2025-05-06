@@ -16,11 +16,29 @@
     />
     <link rel="stylesheet" href="../view/css/style.css" />
     <style>
-
-/* Action dropdown styling */
+      
+/* Action dropdown styling with improved hover */
+/* Action dropdown styling with improved hover */
 .action .item {
   position: relative;
   display: inline-block;
+  margin-right: 15px; /* Add some space between icons */
+}
+
+/* Enhance the user icon and text to be more visible */
+.action .item > a {
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  color: #333;
+  text-decoration: none;
+}
+
+/* Highlight on hover to show it's interactive */
+.action .item > a:hover {
+  color: #f37319; /* Change text color instead of background */
 }
 
 /* Hide dropdown by default */
@@ -28,42 +46,59 @@
   display: none;
   position: absolute;
   background-color: #fff;
-  min-width: 160px;
+  min-width: 180px; /* Wider dropdown for better readability */
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   right: 0;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 8px 0;
   margin-top: 5px;
+  transition: all 0.3s ease;
+  border: 1px solid #eaeaea;
 }
 
-/* Only show dropdown on hover for the user icon */
-.action .item:has(.fa-regular.fa-user):hover .item_menu {
+/* Show dropdown on hover with improved trigger area */
+.action .item:hover .item_menu {
   display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Create a small invisible area to prevent dropdown from closing too easily */
+.action .item .item_menu::after {
+  content: '';
+  position: absolute;
+  top: -20px; /* Create an invisible area above the dropdown */
+  left: 0;
+  width: 100%;
+  height: 20px;
 }
 
 /* Remove default list styling */
 .action .item_menu li {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-/* Style menu links to prevent wrapping */
+/* Style menu links for better visibility and interaction */
 .action .item_menu li a {
   color: #333;
-  padding: 10px 16px;
+  padding: 12px 16px;
   text-decoration: none;
   display: block;
   margin: 0;
-  font-size: 16px;
-  transition: all 0.3s ease;
+  font-size: 15px;
+  transition: all 0.2s ease;
   white-space: nowrap; /* Prevent text from wrapping */
 }
 
+/* More visible hover effect for menu items */
 .action .item_menu li a:hover {
   color: #f37319;
+  padding-left: 20px; /* Slight indent on hover */
 }
 
-/* Add a small arrow to indicate dropdown only for user icon */
+/* Add a small arrow to indicate dropdown */
 .action .item:has(.fa-regular.fa-user) > a::after {
   content: '';
   display: inline-block;
@@ -72,8 +107,14 @@
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-top: 4px solid #000;
+  border-top: 4px solid #333;
   vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+/* Rotate arrow when dropdown is visible */
+.action .item:hover > a::after {
+  transform: rotate(180deg);
 }
 
 /* User name styling if logged in */
@@ -96,6 +137,28 @@
   border-bottom: 8px solid #fff;
 }
 
+/* Animation for dropdown appearance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure the cart icon has similar styling for consistency */
+.action .item:has(.fa-cart-shopping) > a {
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.action .item:has(.fa-cart-shopping) > a:hover {
+  color: #f37319; /* Change text color instead of background */
+}
 
 /* Headline */
 .headline {
@@ -663,6 +726,66 @@
         box-shadow: 0 4px 12px rgba(243, 115, 25, 0.4);
     }
 
+.view-cart-button {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.3);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.view-cart-button:hover {
+    background-color: #1a2530;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(44, 62, 80, 0.4);
+}
+
+/* Hiệu ứng */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to { 
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Responsive cho thiết bị nhỏ */
+@media screen and (max-width: 480px) {
+    .modal-container {
+        padding: 25px;
+    }
+    
+    .modal-title {
+        font-size: 22px;
+    }
+    
+    .modal-message {
+        font-size: 15px;
+    }
+    
+    .modal-action {
+        flex-direction: column;
+    }
+    
+    .close-button, .view-cart-button {
+        width: 100%;
+    }
+}
     </style>
 </head>
 <body>
@@ -857,7 +980,7 @@ $max_price = isset($_GET['max_price']) ? (int)$_GET['max_price'] : 0;
 
 if (empty($search) && $maLoaiSP == 0 && $min_price == 0 && $max_price == 0): ?>
   <div class="banner">
-    <img src="../view/img/White Texture Modern Korean Food Banner.png" alt="banner">
+    <img src="../view/img/banner.png" alt="banner">
   </div>
 <?php endif; ?>
 
@@ -870,33 +993,35 @@ if (empty($search) && $maLoaiSP == 0 && $min_price == 0 && $max_price == 0): ?>
    
 <!-- ex  -->
 
-        <ul class="products">
+<ul class="products">
     <?php if (!empty($products)): ?>
         <?php foreach ($products as $product): ?>
-            <div class="products-item">
-              <li>
-                <div class="product-top">
-                    <a href="javascript:void(0)" class="product-thumb" onclick="openProductDetail(<?= $product['MaSP'] ?>)">
-                        <img src="../view/img/product/<?= htmlspecialchars($product['HinhAnh']) ?>" alt="<?= htmlspecialchars($product['TenSP']) ?>">
-                    </a>
-                </div>
-                <div class="product-info">
-                    <a href="javascript:void(0)" class="product-name" onclick="openProductDetail(<?= $product['MaSP'] ?>)">
-                        <?= htmlspecialchars($product['TenSP']) ?>
-                    </a>
-                    <div class="product-price">
-                        <span class="price"><?= number_format($product['DonGia'], 0, ',', '.') ?><span class="currency">đ</span></span>
+            <?php if ($product['TrangThai'] == 1): // Kiểm tra trạng thái sản phẩm ?>
+                <div class="products-item">
+                  <li>
+                    <div class="product-top">
+                        <a href="javascript:void(0)" class="product-thumb" onclick="openProductDetail(<?= $product['MaSP'] ?>)">
+                            <img src="../view/img/product/<?= htmlspecialchars($product['HinhAnh']) ?>" alt="<?= htmlspecialchars($product['TenSP']) ?>">
+                        </a>
                     </div>
-                    <form action="index.php?act=cart" method="post">
-                        <input type="hidden" name="id" value="<?= $product['MaSP'] ?>">
-                        <input type="hidden" name="tensp" value="<?= htmlspecialchars($product['TenSP']) ?>">
-                        <input type="hidden" name="gia" value="<?= $product['DonGia'] ?>">
-                        <input type="hidden" name="hinh" value="<?= htmlspecialchars($product['HinhAnh']) ?>">
-                        <input type="submit" name="addcart" value="Đặt hàng">
-                    </form>
+                    <div class="product-info">
+                        <a href="javascript:void(0)" class="product-name" onclick="openProductDetail(<?= $product['MaSP'] ?>)">
+                            <?= htmlspecialchars($product['TenSP']) ?>
+                        </a>
+                        <div class="product-price">
+                            <span class="price"><?= number_format($product['DonGia'], 0, ',', '.') ?><span class="currency">đ</span></span>
+                        </div>
+                        <form action="index.php?act=cart" method="post">
+                            <input type="hidden" name="id" value="<?= $product['MaSP'] ?>">
+                            <input type="hidden" name="tensp" value="<?= htmlspecialchars($product['TenSP']) ?>">
+                            <input type="hidden" name="gia" value="<?= $product['DonGia'] ?>">
+                            <input type="hidden" name="hinh" value="<?= htmlspecialchars($product['HinhAnh']) ?>">
+                            <input type="submit" name="addcart" value="Đặt hàng">
+                        </form>
+                    </div>
+                  </li>
                 </div>
-            </li>
-            </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     <?php else: ?>
         <p>Không có sản phẩm nào!</p>
@@ -1002,6 +1127,49 @@ function closeModal() {
     <?php unset($_SESSION['order_success']); // Clear the flag ?>
 <?php endif; ?>
 </script>
+
+<!-- Modal thông báo thêm sản phẩm vào giỏ hàng -->
+<div id="addToCartModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#F37319" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+        </div>
+        <h3 class="modal-title">Thêm vào giỏ hàng thành công!</h3>
+        <p class="modal-message">
+            <?php if(isset($_SESSION['added_product'])): ?>
+                Đã thêm <strong><?= htmlspecialchars($_SESSION['added_product']) ?></strong> vào giỏ hàng.
+            <?php else: ?>
+                Sản phẩm đã được thêm vào giỏ hàng.
+            <?php endif; ?>
+        </p>
+        <div class="modal-action">
+            <button onclick="closeAddToCartModal()" class="close-button">Tiếp tục mua sắm</button>
+            <a href="../view/cart.php" class="view-cart-button">Xem giỏ hàng</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function showAddToCartModal() {
+    document.getElementById('addToCartModal').style.display = 'block';
+}
+
+function closeAddToCartModal() {
+    document.getElementById('addToCartModal').style.display = 'none';
+}
+
+// Kiểm tra nếu có tham số cartAdded=true trong URL
+<?php if(isset($_GET['cartAdded']) && $_GET['cartAdded'] == 'true' && isset($_SESSION['added_product'])): ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        showAddToCartModal();
+    });
+    <?php unset($_SESSION['added_product']); // Xóa tên sản phẩm sau khi hiển thị ?>
+<?php endif; ?>
+</script>
+
 <?php include_once('../view/footer.php'); ?>
 </body>
 </html>

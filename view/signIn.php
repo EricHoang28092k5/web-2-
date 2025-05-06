@@ -43,7 +43,7 @@ if(isset($_POST['signIn'])){
         $_SESSION['quan_huyen'] = $row['quan_huyen'];
         $_SESSION['phuong_xa'] = $row['phuong_xa'];
         $_SESSION['role'] = "admin";
-        header("location:adminhome.php");
+        header("location:../view/admin/index.php");
       }
     }else{
       // Account is locked error
