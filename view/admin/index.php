@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['tennguoiDung'])){
+if(isset($_SESSION['tennguoidung'])){
   header("location: quanlytk.php");
 }
 include '../../model/thuvien.php';
@@ -26,7 +26,7 @@ if(isset($_POST['signIn'])){
 
   if($result->num_rows > 0){
     if($row["TrangThai"] == 1){
-        $_SESSION['tennguoiDung'] = $row['tenNguoiDung'];
+        $_SESSION['tennguoidung'] = $row['tenNguoiDung'];
         $_SESSION['tenDangNhap'] = $row['tenDangNhap'];
         $_SESSION['email'] = $row['email'];
         $_SESSION['password'] = $row['password'];
