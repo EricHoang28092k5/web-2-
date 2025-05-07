@@ -181,7 +181,7 @@ input[type=submit]  {
 <body>
 
 <div class="container">
-<h2>ĐĂNG NHẬP</h2>
+<h2>ĐĂNG NHẬP ADMIN</h2>
 <form action="" method="post" style="max-width:500px;margin:auto">
 
   <div class="input-container">
