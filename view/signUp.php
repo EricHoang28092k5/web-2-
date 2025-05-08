@@ -243,7 +243,7 @@ function updateHuyen() {
 
   <div class="input-container">
     <i class="fa fa-envelope icon"></i>
-    <input class="input-field" type="email" placeholder="Email" name="email" required>
+    <input class="input-field" type="email" pattern="^[a-zA-Z0-9](\.?[a-zA-Z0-9_-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$" placeholder="Email" name="email" required>
   </div>
   
   <div class="input-container">

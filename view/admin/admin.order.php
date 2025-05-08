@@ -171,7 +171,7 @@ if(!isset($_SESSION['tennguoidung'])){
                     $district = isset($_GET['district']) ? $_GET['district'] : "";
                     $ward = isset($_GET['ward']) ? $_GET['ward'] : "";
 
-                    $sql = "SELECT * FROM hoadon";
+                    $sql = "SELECT * FROM hoadon ORDER BY IdHoaDon DESC";
                     if (!empty($start_date) || !empty($end_date) || !empty($status) || !empty($district) || !empty($ward) ) {
                       $conditions = []; 
 

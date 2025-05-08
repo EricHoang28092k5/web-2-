@@ -27,14 +27,14 @@ if(isset($_POST['signIn'])){
   if($result->num_rows > 0){
     if($row["TrangThai"] == 1){
         $_SESSION['tennguoidung'] = $row['tenNguoiDung'];
-        $_SESSION['tenDangNhap'] = $row['tenDangNhap'];
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['password'] = $row['password'];
-        $_SESSION['sdt'] = $row['sdt'];
-        $_SESSION['diaChi'] = $row['diaChi']; 
-        $_SESSION['quan_huyen'] = $row['quan_huyen'];
-        $_SESSION['phuong_xa'] = $row['phuong_xa'];
-        $_SESSION['role'] = "admin";
+        $_SESSION['tenDangNhapadmin'] = $row['tenDangNhap'];
+        $_SESSION['emailadmin'] = $row['email'];
+        $_SESSION['passwordadmin'] = $row['password'];
+        $_SESSION['sdtadmin'] = $row['sdt'];
+        $_SESSION['diaChiadmin'] = $row['diaChi']; 
+        $_SESSION['quan_huyenadmin'] = $row['quan_huyen'];
+        $_SESSION['phuong_xaadmin'] = $row['phuong_xa'];
+        $_SESSION['roleadmin'] = "admin";
         header("location:quanlytk.php");
 
     }else{
@@ -181,7 +181,7 @@ input[type=submit]  {
 <body>
 
 <div class="container">
-<h2>ĐĂNG NHẬP</h2>
+<h2>ĐĂNG NHẬP ADMIN</h2>
 <form action="" method="post" style="max-width:500px;margin:auto">
 
   <div class="input-container">
