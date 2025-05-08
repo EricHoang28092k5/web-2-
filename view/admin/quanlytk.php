@@ -12,7 +12,7 @@ if(!isset($_SESSION['tennguoidung'])){
     <title>DMTD FOOD</title>
     <link
       href="../img/DMTD-Food-Logo.jpg"
-      rel="icon"
+      rel="shortcut icon"
       type="image/x-icon"
     />
     <link
