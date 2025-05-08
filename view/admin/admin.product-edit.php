@@ -25,7 +25,7 @@ if(!$result0 || mysqli_num_rows($result0) == 0){
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       href="../img/DMTD-Food-Logo.jpg"
-      rel="icon"
+      rel="shortcut icon"
       type="image/x-icon"
     />
     <link

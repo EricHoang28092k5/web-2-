@@ -211,7 +211,7 @@ window.onload = function () {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link
       href="../img/DMTD-Food-Logo.jpg"
-      rel="icon"
+      rel="shortcut icon"
       type="image/x-icon"
     />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
