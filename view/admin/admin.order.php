@@ -176,7 +176,7 @@ if(!isset($_SESSION['tennguoidung'])){
                     $district = isset($_GET['district']) ? $_GET['district'] : "";
                     $ward = isset($_GET['ward']) ? $_GET['ward'] : "";
 
-                    $sql = "SELECT * FROM hoadon ORDER BY IdHoaDon DESC";
+                    $sql = "SELECT * FROM hoadon";
                     if (!empty($start_date) || !empty($end_date) || !empty($status) || !empty($district) || !empty($ward) ) {
                       $conditions = []; 
 
@@ -210,6 +210,7 @@ if(!isset($_SESSION['tennguoidung'])){
                           $sql .= " WHERE " . implode(" AND ", $conditions);
                       }
                     }
+                    $sql .= " ORDER BY IdHoaDon DESC";
 
                     $result = mysqli_query($conn, $sql);
 
