@@ -35,15 +35,15 @@ if(isset($_POST['signIn'])){
         $_SESSION['role'] = "user";
         header("location:../controller/index.php");
       }else if($row["vaiTro"] == "admin"){
-        $_SESSION['tenNguoiDung'] = $row['tenNguoiDung'];
-        $_SESSION['tenDangNhap'] = $row['tenDangNhap'];
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['password'] = $row['password'];
-        $_SESSION['sdt'] = $row['sdt'];
-        $_SESSION['diaChi'] = $row['diaChi']; 
-        $_SESSION['quan_huyen'] = $row['quan_huyen'];
-        $_SESSION['phuong_xa'] = $row['phuong_xa'];
-        $_SESSION['role'] = "admin";
+        $_SESSION['tennguoidung'] = $row['tenNguoiDung'];
+        $_SESSION['tenDangNhapadmin'] = $row['tenDangNhap'];
+        $_SESSION['emailadmin'] = $row['email'];
+        $_SESSION['passwordadmin'] = $row['password'];
+        $_SESSION['sdtadmin'] = $row['sdt'];
+        $_SESSION['diaChiadmin'] = $row['diaChi']; 
+        $_SESSION['quan_huyenadmin'] = $row['quan_huyen'];
+        $_SESSION['phuong_xaadmin'] = $row['phuong_xa'];
+        $_SESSION['roleadmin'] = "admin";
         header("location:../view/admin/index.php");
       }
     }else{
