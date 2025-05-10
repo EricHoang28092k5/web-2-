@@ -27,8 +27,8 @@ while($row=mysqLi_fetch_array($result)){
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
+      href="../img/DMTD-Food-Logo.jpg"
       rel="shortcut icon"
-      href="../assets/img/DMTD-Food-Logo.jpg"
       type="image/x-icon"
     />
     <title>DMTD FOOD</title>

@@ -37,11 +37,6 @@ if(!$result0 || mysqli_num_rows($result0) == 0){
     />
     <link rel="stylesheet" href="../css/admin/index.css"/>
     <link rel="stylesheet" href="../css/admin/admin.order-detail.css"/>
-    <link
-      rel="shortcut icon"
-      href="../view/img/DMTD-Food-Logo.jpg"
-      type="image/x-icon"
-    />
     <title>DMTD FOOD</title>
   </head>
 
