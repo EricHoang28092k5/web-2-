@@ -1109,40 +1109,6 @@ if (empty($search) && $maLoaiSP == 0 && $min_price == 0 && $max_price == 0): ?>
   }
 </script>
 
-<div id="successModal" class="modal-overlay">
-    <div class="modal-container">
-        <div class="success-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-        </div>
-        <h3 class="modal-title">Đặt hàng thành công!</h3>
-        <p class="modal-message">Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý.</p>
-        <div class="modal-action">
-            <button onclick="closeModal()" class="close-button">Đóng</button>
-        </div>
-    </div>
-</div>
-
-<script>
-function showModal() {
-    document.getElementById('successModal').style.display = 'block';
-}
-
-function closeModal() {
-    document.getElementById('successModal').style.display = 'none';
-}
-
-// Check for order success flag
-<?php if(isset($_SESSION['order_success']) && $_SESSION['order_success']): ?>
-    document.addEventListener('DOMContentLoaded', function() {
-        showModal();
-    });
-    <?php unset($_SESSION['order_success']); // Clear the flag ?>
-<?php endif; ?>
-</script>
-
 <!-- Modal thông báo thêm sản phẩm vào giỏ hàng -->
 <div id="addToCartModal" class="modal-overlay">
     <div class="modal-container">
