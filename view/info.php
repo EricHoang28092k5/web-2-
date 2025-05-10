@@ -11,14 +11,21 @@ if (!$isLoggedIn) {
     exit();
 }
 
-// Lấy thông tin người dùng từ session
-$tenNguoiDung = $_SESSION['tenNguoiDung'];
-$tenDangNhap = $_SESSION['tenDangNhap'];
 $email = $_SESSION['email'];
-$sdt = $_SESSION['sdt'];
-$diaChi = $_SESSION['diaChi'];
-$quan_huyen = $_SESSION['quan_huyen'];
-$phuong_xa = $_SESSION['phuong_xa'];
+$conn = ketnoidb();
+$sql = "SELECT * FROM nguoidung WHERE email = '$email'";
+$result = $conn->query($sql);
+
+if($result && $result->num_rows>0){
+  $row = $result->fetch_assoc();
+
+  $tenNguoiDung = $row['tenNguoiDung'];
+  $tenDangNhap = $row['tenDangNhap'];
+  $sdt = $row['sdt'];
+  $diaChi = $row['diaChi'];
+  $quan_huyen = $row['quan_huyen'];
+  $phuong_xa = $row['phuong_xa'];
+}
 
 // Include header
 include 'header.php';

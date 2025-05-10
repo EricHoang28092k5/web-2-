@@ -32,6 +32,7 @@ if(isset($_POST['signIn'])){
         $_SESSION['diaChi'] = $row['diaChi'];
         $_SESSION['quan_huyen'] = $row['quan_huyen'];
         $_SESSION['phuong_xa'] = $row['phuong_xa'];
+        $_SESSION['trangThai'] = $row['TrangThai'];
         $_SESSION['role'] = "user";
         header("location:../controller/index.php");
       }else if($row["vaiTro"] == "admin"){
@@ -43,6 +44,7 @@ if(isset($_POST['signIn'])){
         $_SESSION['diaChiadmin'] = $row['diaChi']; 
         $_SESSION['quan_huyenadmin'] = $row['quan_huyen'];
         $_SESSION['phuong_xaadmin'] = $row['phuong_xa'];
+        $_SESSION['trangThai'] = $row['TrangThai'];
         $_SESSION['roleadmin'] = "admin";
         header("location:../view/admin/index.php");
       }

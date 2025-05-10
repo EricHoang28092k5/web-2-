@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../model/thuvien.php';
 // Xử lý yêu cầu xóa sản phẩm
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove_item"])) {
     $id = $_POST["remove_id"];
@@ -30,14 +31,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_quantity"])) {
 $isLoggedIn = isset($_SESSION['tenDangNhap']);
 
 if($isLoggedIn){
-  $tenNguoiDung = $_SESSION['tenNguoiDung'];
-  $tenDangNhap = $_SESSION['tenDangNhap']; 
-  $email = $_SESSION['email']; 
-  $password = $_SESSION['password'];
-  $sdt = $_SESSION['sdt'];
-  $diaChi = $_SESSION['diaChi'];
-  $quan_huyen = $_SESSION['quan_huyen'];
-  $phuong_xa = $_SESSION['phuong_xa'];
+$email = $_SESSION['email'];
+$conn = ketnoidb();
+$sql = "SELECT * FROM nguoidung WHERE email = '$email'";
+$result = $conn->query($sql);
+
+if($result && $result->num_rows>0){
+  $row = $result->fetch_assoc();
+
+  $tenNguoiDung = $row['tenNguoiDung'];
+  $tenDangNhap = $row['tenDangNhap'];
+  $sdt = $row['sdt'];
+  $diaChi = $row['diaChi'];
+  $quan_huyen = $row['quan_huyen'];
+  $phuong_xa = $row['phuong_xa'];
+}
 }
 
 include "../view/header.php";
@@ -707,12 +715,12 @@ include "../view/header.php";
             
             <form id="hiddenForm" action="check_order.php" method="post">
                 <!-- Đảm bảo giá trị session được gán đúng cách vào các trường input -->
-                <input type="hidden" name="tenNguoiDung" value="<?php echo $_SESSION['tenNguoiDung']; ?>">
-                <input type="hidden" name="email" value="<?php echo $_SESSION['email']; ?>">
-                <input type="hidden" name="sdt" value="<?php echo $_SESSION['sdt']; ?>">
-                <input type="hidden" name="diaChi" value="<?php echo $_SESSION['diaChi']; ?>">
-                <input type="hidden" name="quan_huyen" value="<?php echo $_SESSION['quan_huyen']; ?>">
-                <input type="hidden" name="phuong_xa" value="<?php echo $_SESSION['phuong_xa']; ?>">
+                <input type="hidden" name="tenNguoiDung" value="<?php echo $tenNguoiDung; ?>">
+                <input type="hidden" name="email" value="<?php echo $email; ?>">
+                <input type="hidden" name="sdt" value="<?php echo $sdt; ?>">
+                <input type="hidden" name="diaChi" value="<?php echo $diaChi; ?>">
+                <input type="hidden" name="quan_huyen" value="<?php echo $quan_huyen; ?>">
+                <input type="hidden" name="phuong_xa" value="<?php echo $phuong_xa; ?>">
                 
                 <!-- Thêm tổng số tiền -->
                 <input type="hidden" name="totalAmount" value="<?php echo $totalAmount; ?>">

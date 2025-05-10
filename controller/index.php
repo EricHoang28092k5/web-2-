@@ -1,5 +1,7 @@
 <?php
 session_start();
+include_once('../model/thuvien.php');
+
 // KT USER ĐĂNG NHẬP CHƯA
 $isLoggedIn = isset($_SESSION['tenDangNhap']);
 
@@ -18,6 +20,21 @@ if($vaiTro == "admin"){
     $quan_huyen = $_SESSION['quan_huyen'];
     $phuong_xa = $_SESSION['phuong_xa'];
   }
+}
+$trangThai = null;
+if(isset($email)){
+    $conn = ketnoidb();
+    $query = "SELECT TrangThai FROM nguoidung WHERE email = '$email'";
+    $result = $conn->query($query);
+    if($result && $result->num_rows>0){
+        $row = $result->fetch_assoc(); 
+        $trangThai = (int)$row['TrangThai'];
+    }
+}
+
+if($isLoggedIn && $trangThai == 2){
+    header("Location:../view/logOut.php");
+    exit();
 }
 
 if(!isset($_SESSION['giohang'])){
@@ -120,10 +137,31 @@ if(isset($_GET['act'])){
                         $sql_update = "UPDATE sanpham SET SoLuongBan = SoLuongBan + $soLuong WHERE MaSP = $idsp";
                         mysqli_query($conn, $sql_update);
                     }
-                    unset($_SESSION['giohang']); // Xóa giỏ hàng
-
+                    
+                   // Lưu thông tin đơn hàng
+                    $_SESSION['order_info'] = array(
+                        'id' => $idHoaDon,
+                        'date' => date("d/m/Y")
+                    );
+                    $_SESSION['order_items'] = $_SESSION['giohang'];
+                    $_SESSION['tenNguoiDung'] = $tenNguoiDung;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['sdt'] = $sdt; 
+                    $_SESSION['diaChi'] = $diaChi;
+                    $_SESSION['quan_huyen'] = $quan_huyen;
+                    $_SESSION['phuong_xa'] = $phuong_xa;
+                    $_SESSION['pttt'] = $pttt;
+                    $_SESSION['tongTien'] = $tongTien;
+                    
+                    // Đánh dấu đặt hàng thành công
                     $_SESSION['order_success'] = true;
-                    header("Location: ../controller/index.php");
+                    // Lưu mã hóa đơn vào session để sử dụng ở order-success.php
+                    $_SESSION['maHoaDon'] = $idHoaDon;
+                    
+                    unset($_SESSION['giohang']); // Xóa giỏ hàng
+                    
+                    // Chuyển hướng đến trang xác nhận đặt hàng thành công
+                    header("Location: ../view/order-success.php");
                     exit();
                 }else{
                     echo "<script> alert ('Không thêm được giá trị idNguoiDung và idHoaDon'); </script>";
