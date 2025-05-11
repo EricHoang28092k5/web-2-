@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 10, 2025 lúc 04:06 PM
+-- Thời gian đã tạo: Th5 11, 2025 lúc 06:17 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -68,7 +68,11 @@ INSERT INTO `chitiethoadon` (`IdHoaDon`, `MaSP`, `SoLuong`, `DonGia`) VALUES
 (78, 14, 1, 320000),
 (79, 18, 1, 35000),
 (79, 16, 1, 399000),
-(79, 2, 1, 60000);
+(79, 2, 1, 60000),
+(80, 19, 1, 199000),
+(80, 4, 1, 30000),
+(80, 24, 1, 499999),
+(81, 24, 1, 499999);
 
 -- --------------------------------------------------------
 
@@ -107,7 +111,9 @@ INSERT INTO `hoadon` (`IdHoaDon`, `IdNguoiDung`, `HoTen`, `email`, `sdt`, `DiaCh
 (76, 9, 'Hoàng Vũ Minh Mẫn', 'man01@gmail.com', '01234567895', '67 Lê Lợi', 'Quận 1', 'Cầu Kho', '2025-05-06 11:43:26', 299000, 1, 3),
 (77, 1, 'Nguyễn Tấn Dũng', '123@gmail.com', '01234567899', '88 Lũy Bán Bích', 'Quận 12', 'Tân Thới Hiệp', '2025-05-08 10:27:11', 839000, 2, 2),
 (78, 18, 'Nguyễn Tấn Sinbaseto', 'minhman2809@gmail.com', '01234567899', '273 An Dương Vương', 'Quận 5', 'Phường 4', '2025-05-09 21:18:17', 395000, 2, 1),
-(79, 18, 'Nguyễn Tấn Sinbaseto', 'minhman2809@gmail.com', '01234567899', '153 Trần Hưng Đạo', 'Quận 1', 'Bến Nghé', '2025-05-09 21:19:46', 494000, 1, 4);
+(79, 18, 'Nguyễn Tấn Sinbaseto', 'minhman2809@gmail.com', '01234567899', '153 Trần Hưng Đạo', 'Quận 1', 'Bến Nghé', '2025-05-09 21:19:46', 494000, 1, 4),
+(80, 20, 'Hoàng Mẫn', 'dangtuan21@gmail.com', '01234567898', '113 phan xích long', 'Quận Tân Phú', 'Phường Tây Thạnh', '2025-05-10 21:26:10', 728999, 2, 1),
+(81, 20, 'Hoàng Mẫn', 'dangtuan21@gmail.com', '01234567898', '153 Trần Hưng Đạo', 'Quận Gò Vấp', 'Phường 15', '2025-05-10 21:28:35', 499999, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -168,7 +174,9 @@ INSERT INTO `nguoidung` (`id_nguoidung`, `tenNguoiDung`, `tenDangNhap`, `email`,
 (16, 'Võ Hòa Bình', 'binhvo123', 'binhvo123@gmail.com', '123', '09988776655', '269 Nguyễn Thị Nhỏ ', 'Quận 11', 'Phường 16', 'user', 1, '2025-05-06 04:09:29'),
 (17, 'Mai Hồng Phong', 'phongmai', 'hongphong123@gmail.com', '444', '08978965431', '55 Lê Đại Hành', 'Quận 11', 'Phường 13', 'user', 1, '2025-05-06 04:33:41'),
 (18, 'Nguyễn Tấn Sinbaseto', 'Sinbase', 'minhman2809@gmail.com', '222', '01234567899', '153 Trần Hưng Đạo', 'Quận 1', 'Bến Nghé', 'user', 1, '2025-05-09 14:17:00'),
-(19, 'Hoàng Vũ Mẫn', 'manhoang', 'jackhoang2809@gmail.com', '123', '01234567898', '273 An Dương Vương', 'Quận Tân Bình', 'Phường 10', 'user', 1, '2025-05-09 14:25:23');
+(19, 'Hoàng Vũ Mẫn', 'manhoang', 'jackhoang2809@gmail.com', '123', '01234567898', '273 An Dương Vương', 'Quận Tân Bình', 'Phường 10', 'user', 1, '2025-05-09 14:25:23'),
+(20, 'Mẫn', 'mann', 'dangtuan21@gmail.com', '123', '01234567898', '153 Trần Hưng Đạo', 'Quận Gò Vấp', 'Phường 15', 'user', 1, '2025-05-10 14:24:03'),
+(21, 'Nguyễn Bình Minh', 'bm', 'admin@gmail.com', '123', '01234567899', '113 phan xích long', 'Thành phố Thủ Đức', 'Linh Xuân', 'user', 1, '2025-05-10 14:50:07');
 
 -- --------------------------------------------------------
 
@@ -195,7 +203,7 @@ INSERT INTO `sanpham` (`MaSP`, `MaLoaiSP`, `TenSP`, `DonGia`, `MoTa`, `HinhAnh`,
 (1, 1, 'Gà ủ muối', 299000, 'Là một món ăn độc đáo, được chế biến bằng cách ướp thịt gà với muối, các loại gia vị và ủ trong thời gian nhất định. Khi nướng lên, thịt gà sẽ có vị mặn ngọt vừa phải, thịt mềm ngọt và thơm lừng mùi gia vị.', 'ga_u_muoi.jpg', 1, 6),
 (2, 2, 'Rau xào ngũ sắc', 60000, 'Rau xào ngũ sắc là món ăn hấp dẫn với sự kết hợp hài hòa của nhiều loại rau củ có màu sắc bắt mắt như cà rốt, ớt chuông, bông cải, đậu cô ve và nấm. Món ăn không chỉ giàu dinh dưỡng mà còn giòn ngon, đậm đà nhờ cách xào nhanh trên lửa lớn cùng gia vị', 'rau-xao-ngu-sac.jpg', 1, 7),
 (3, 4, 'Trà đào chanh sả', 40000, 'Trà đào chanh sả là một loại đồ uống giải khát thơm ngon, hấp dẫn với sự kết hợp hoàn hảo của vị ngọt thanh từ đào, vị chua dịu của chanh, và hương thơm sả dịu nhẹ. Món đồ uống này không chỉ mang lại cảm giác sảng khoái mà còn rất tốt cho sức khỏe.', 'cach-pha-tra-dao-chanh-sa.jpg', 1, 24),
-(4, 4, 'Nước ép dâu tây', 30000, 'Nước ép dâu tây là thức uống thơm ngon, giàu vitamin C và chất chống oxy hóa, giúp tăng cường sức khỏe và làm đẹp da. Dâu tây tươi được ép cùng một chút đường hoặc mật ong để cân bằng vị chua ngọt', 'nuoc-ep-dau-tay.jpg', 1, 8),
+(4, 4, 'Nước ép dâu tây', 30000, 'Nước ép dâu tây là thức uống thơm ngon, giàu vitamin C và chất chống oxy hóa, giúp tăng cường sức khỏe và làm đẹp da. Dâu tây tươi được ép cùng một chút đường hoặc mật ong để cân bằng vị chua ngọt', 'nuoc-ep-dau-tay.jpg', 1, 9),
 (5, 2, 'Nấm đùi gà cháy tỏi', 69000, 'Nấm đùi gà cháy tỏi là một món ăn đơn giản nhưng vô cùng thơm ngon và bổ dưỡng, rất được ưa chuộng trong các bữa cơm gia đình hoặc làm món ăn nhẹ. Hương vị đặc trưng của nấm giòn ngọt tự nhiên hòa quyện với mùi thơm nồng của tỏi phi ', 'nam-dui-ga-sot-bo-toi.jpg', 1, 1),
 (6, 2, 'Lẩu thái nấm chay', 250000, 'Lẩu Thái nấm chay là một phiên bản thanh đạm nhưng không kém phần đậm đà của món lẩu Thái, rất phù hợp cho những người ăn chay hoặc muốn thưởng thức một món ăn nhẹ nhàng, tốt cho sức khỏe. Với sự kết hợp của nấm tươi, rau củ và các gia vị chua cay, m', 'lau_thai.jpg', 1, 5),
 (7, 1, 'Tôm sú rang bơ tỏi', 310000, 'Tôm sú rang bơ tỏi là một món ăn vô cùng thơm ngon và dễ chế biến, thích hợp cho những bữa ăn gia đình hoặc tiệc tùng. Món ăn này có sự kết hợp hoàn hảo giữa vị ngọt tự nhiên của tôm, bơ béo ngậy và mùi thơm nồng của tỏi phi. Hãy thử ngay', 'tom-su-rang-bo-toi.jpeg', 1, 1),
@@ -209,12 +217,27 @@ INSERT INTO `sanpham` (`MaSP`, `MaLoaiSP`, `TenSP`, `DonGia`, `MoTa`, `HinhAnh`,
 (15, 3, 'Lẩu nấm ', 299000, 'Lẩu nấm, một món ăn thanh đạm nhưng đầy quyến rũ, là sự hòa quyện tinh tế của vô vàn loại nấm tươi ngon cùng nước dùng ngọt thanh, mang đến trải nghiệm ẩm thực khó quên.Lẩu nấm không chỉ là món ăn ngon mà còn rất tốt cho sức khỏe. Nấm là nguồn cung c', 'Lau_nam.jpg', 1, 3),
 (16, 3, 'Lẩu cua đồng', 399000, 'Lẩu cua đồng mang đến một hương vị hài hòa, tinh tế. Vị ngọt thanh, đậm đà của nước dùng quyện cùng vị béo bùi của riêu cua, chút chua nhẹ của cà chua và sự tươi mát của các loại rau. Khi nhúng thêm các loại thịt và hải sản, nồi lẩu càng trở nên phon', 'lau-cua-dong.jpg', 1, 1),
 (18, 4, 'matcha latte', 35000, 'Thức uống xanh mát, kết hợp hoàn hảo giữa bột trà xanh matcha thượng hạng và sữa tươi mềm mịn. Vị trà thanh tao, hơi ngọt dịu, mang đến cảm giác thư thái và sảng khoái độc đáo, là lựa chọn lý tưởng để khởi đầu ngày mới hoặc thư giãn sau bữa ăn ngon t', 'matcha-latte.jpg', 1, 2),
-(19, 3, 'Lẩu gà', 199000, 'Lẩu gà là một món ăn quen thuộc và được yêu thích trong ẩm thực Việt Nam, đặc biệt là trong những ngày se lạnh hoặc những buổi tụ họp gia đình, bạn bè. Món lẩu này hấp dẫn bởi nước dùng ngọt thanh, thịt gà mềm thơm và sự đa dạng của các loại rau, nấm', 'lau-ga-ta-3_4c44f0a032f642d2bf52538894af8eec.jpg', 1, 1),
+(19, 3, 'Lẩu gà', 199000, 'Lẩu gà là một món ăn quen thuộc và được yêu thích trong ẩm thực Việt Nam, đặc biệt là trong những ngày se lạnh hoặc những buổi tụ họp gia đình, bạn bè. Món lẩu này hấp dẫn bởi nước dùng ngọt thanh, thịt gà mềm thơm và sự đa dạng của các loại rau, nấm', 'lau-ga-ta-3_4c44f0a032f642d2bf52538894af8eec.jpg', 1, 2),
 (20, 3, 'Lẩu cá chình', 250000, 'Lẩu cá chình mang đến một hương vị độc đáo và hấp dẫn. Thịt cá chình béo ngậy, dai ngon hòa quyện với nước dùng đậm đà, chua cay hoặc ngọt thanh tùy theo cách chế biến. Các loại rau ăn kèm tạo thêm sự cân bằng và tươi mát cho món ăn.', 'lau-ca-chinh.jpg', 1, 6),
 (22, 3, 'Lẩu vịt', 499000, 'Lẩu vịt là một món ăn đặc trưng trong ẩm thực Việt Nam, kết hợp giữa vị béo ngậy của thịt vịt và nước dùng đậm đà, thơm mùi thuốc bắc hoặc sả gừng (tùy vùng miền và cách chế biến)', '2-cach-lam-lau-vit-om-sau-lau-vit-nuoc-dua-don-gian-ma-thom-ngon-19.jpg', 1, 0),
 (23, 3, 'Lẩu ếch', 225000, 'Lẩu ếch là một món ăn độc đáo và hấp dẫn trong ẩm thực Việt Nam, nổi bật với vị đậm đà của thịt ếch và nước dùng thơm ngon, thường được nấu theo phong cách cay nồng hoặc chua cay tùy vùng miền. Đây là món ăn rất được ưa chuộng trong các buổi tụ họp b', 'images.jpg', 1, 0),
-(24, 3, 'Lẩu cá chép', 499999, 'Lẩu cá chép là một món ăn dân dã nhưng rất được ưa chuộng trong ẩm thực Việt Nam, đặc biệt là vào những dịp tụ họp gia đình hay khi thời tiết se lạnh. Món này nổi bật với vị ngọt thanh tự nhiên từ cá chép và nước dùng đậm đà, kết hợp hài hòa với rau ', 'huong-dan-cach-nau-lau-ca-chep-gion-ngon-dam-da-2-760x367.jpg', 1, 0),
-(25, 3, 'Lẩu mắm', 150000, 'Lẩu mắm là một trong những món ăn đặc trưng và nổi bật nhất của ẩm thực miền Tây Nam Bộ, mang đậm hương vị dân dã, mộc mạc nhưng vô cùng hấp dẫn. Đây là món lẩu có hương thơm rất đặc trưng từ mắm cá, kết hợp với nhiều loại rau đồng và hải sản, thịt h', '110724-lau-mam-mien-tay-cung-buffet-poseidon-1-1.jpg', 1, 0);
+(24, 3, 'Lẩu cá chép', 499999, 'Lẩu cá chép là một món ăn dân dã nhưng rất được ưa chuộng trong ẩm thực Việt Nam, đặc biệt là vào những dịp tụ họp gia đình hay khi thời tiết se lạnh. Món này nổi bật với vị ngọt thanh tự nhiên từ cá chép và nước dùng đậm đà, kết hợp hài hòa với rau ', 'huong-dan-cach-nau-lau-ca-chep-gion-ngon-dam-da-2-760x367.jpg', 1, 2),
+(25, 3, 'Lẩu mắm', 150000, 'Lẩu mắm là một trong những món ăn đặc trưng và nổi bật nhất của ẩm thực miền Tây Nam Bộ, mang đậm hương vị dân dã, mộc mạc nhưng vô cùng hấp dẫn. Đây là món lẩu có hương thơm rất đặc trưng từ mắm cá, kết hợp với nhiều loại rau đồng và hải sản, thịt h', '110724-lau-mam-mien-tay-cung-buffet-poseidon-1-1.jpg', 1, 0),
+(27, 1, 'Cá kho tộ', 180000, 'Là món ăn đậm đà, thường thấy trong bữa cơm gia đình miền Nam. Cá lóc hoặc cá basa được ướp với nước mắm, tiêu, ớt, hành tỏi và nước màu, rồi kho trong nồi đất đến khi nước sánh lại. Miếng cá thấm gia vị, có vị cay nồng nhẹ và mùi thơm đặc trưng của ', 'maxresdefault.jpg', 1, 0),
+(28, 1, 'Chả cá chiên', 220000, 'Cá tươi (thường là cá thác lác, cá basa, cá thu...) được xay nhuyễn, trộn với hành, tỏi, tiêu, nước mắm và một ít bột năng cho dẻo. Sau đó được nặn thành từng miếng vừa ăn rồi chiên vàng. Món chả cá thơm phức, bên ngoài giòn nhẹ, bên trong dai ngọt, ', 'cha_ca_thu_phu_quoc_chien__2__b7528b049b124878b54fa56b94daef70_master.webp', 1, 0),
+(29, 1, 'Thịt bò xào hành tây', 289999, 'Thịt bò được thái mỏng, ướp với tỏi, nước tương, dầu hào rồi xào nhanh tay trên lửa lớn cùng hành tây cắt múi cau. Món ăn giữ được độ mềm ngọt của thịt bò và độ giòn ngọt nhẹ của hành tây. Vị đậm đà, thơm nức mũi, rất thích hợp cho bữa cơm tối đơn gi', 'thit-bo-xao-can-tay-thumbnail.jpg', 1, 0),
+(30, 1, 'Mắm chưng thịt', 150000, 'Một món ăn đậm chất miền Tây. Mắm cá linh hoặc cá sặc được đánh nhuyễn, trộn với thịt heo băm, trứng gà, hành tím và tiêu, sau đó hấp cách thủy. Khi chín, lớp mặt mắm chưng vàng ươm, thơm lừng, ăn kèm cơm trắng và rau luộc như dưa leo, rau muống là \"', 'maxresdefault (1).jpg', 1, 0),
+(31, 1, ' Đậu hũ nhồi thịt sốt cà', 120000, 'Đậu hũ được rạch giữa và nhồi nhân thịt băm đã ướp gia vị, sau đó chiên vàng. Tiếp đến, đậu được nấu chung với nước sốt cà chua thơm lừng, vị chua nhẹ, mặn ngọt dịu dàng. Món ăn có sự kết hợp giữa độ mềm mịn của đậu và vị đậm đà của nhân thịt, rất đư', 'cach-lam-dau-hu-nhoi-thit-sot-ca-ngon-dam-da-cua-ban-thuy-hang-202202260940591871.jpg', 1, 0),
+(32, 2, 'Tàu hũ ky cuốn nấm', 140000, 'Tàu hũ ky cuốn nhân nấm mèo, nấm hương, cà rốt, miến... chiên vàng giòn. Có thể chấm tương ớt hoặc nước tương pha chua ngọt.', 'lrm_export_58006318702341_20191021_010400729.jpg', 1, 0),
+(33, 2, ' Đậu hũ nhồi nấm sốt cà chua', 130000, 'Đậu hũ khoét ruột, nhồi nhân nấm băm, sau đó nấu với sốt cà chua. Món ăn mềm, ngọt nhẹ, cực kỳ đưa cơm.', '45ba1884fd5f92.img.jpg', 1, 0),
+(34, 2, ' Đậu hũ kho nấm', 80000, 'Đậu hũ chiên vàng, kho chung với nấm rơm hoặc nấm đông cô trong nước tương, tiêu và hành boaro. Nước kho sánh nhẹ, thơm nồng, vị đậm đà, ăn với cơm nóng rất bắt vị.', 'maxresdefault (2).jpg', 1, 0),
+(35, 1, 'Vịt kho gừng', 250000, 'Vịt chặt miếng ướp nước mắm, tiêu, gừng tươi và tỏi, sau đó kho đến khi thịt mềm, nước kho sánh lại. Gừng giúp khử mùi hôi, tạo mùi thơm nồng, rất bắt cơm. Món này ăn nóng trong ngày mưa lạnh thì tuyệt vời.', 'cach_lam_vit_kho_gung_thom_ngon_dam_da_don_gian_tai_nha_ywdzz_1674973459_15e779fc4b.jpeg', 1, 0),
+(36, 2, 'Bún riêu chay', 180000, 'Nước dùng từ cà chua, thơm, đậu hũ và nấm, thêm riêu chay (đậu hũ nghiền với nấm). Vị chua thanh, thơm mùi đậu, ăn kèm rau sống và bún.', 'cach-lam-bun-rieu-chay-don-gian-dam-da-le-vu-lan-avt-1200x676.jpg', 1, 0),
+(37, 2, 'Mì xào chay', 130000, 'Mì hoặc nui xào với rau củ (bông cải, cà rốt, đậu que), đậu hũ chiên và nấm. Món dễ ăn, có thể dùng sáng hoặc tối đều hợp lý.', 'cach-lam-mi-xao-chay-thom-ngon-va-de-lam-800.jpg', 1, 0),
+(38, 2, 'Canh nấm rong biển đậu hũ non', 110000, 'Canh nhẹ, thanh đạm, nấu từ nấm (bào ngư, đông cô), đậu hũ non và rong biển khô. Tốt cho tiêu hóa, giải nhiệt và rất dễ ăn.', '3f96a11c83c1795c168c2e41fee83bff.webp', 1, 0),
+(39, 4, 'Trà nấm linh chi', 60000, 'Vị ngọt mát, hỗ trợ giấc ngủ, giảm mệt mỏi. Linh chi nấu với táo đỏ, cam thảo trong ấm trà, dùng nóng hoặc để nguội.', 'bai_viettra_nam_linh_chi_nhung_loi_ich_cho_suc_khoe_va_tac_dung_phu_can_luu_y_html_2_7af360bab9.webp', 1, 0),
+(40, 2, 'Cháo nấm thịt bằm', 120000, 'Cháo trắng nấu nhuyễn với nấm rơm, thịt heo bằm và hành lá. Vị thanh ngọt, dễ ăn, thích hợp cho cả người lớn lẫn trẻ nhỏ.', 'thanh-pham-18.jpg', 1, 0),
+(41, 1, 'Gà nấu nấm đông cô', 350000, 'Gà ta hầm với nấm đông cô và hạt sen, nêm đậm đà, ngọt nước, thịt mềm tan, nấm thơm nức mũi – rất bổ và dễ ăn.', 'cuoi-tuan-lam-mon-ga-nau-nam-dong-co-bo-duong-ca-nha-quay-quan-ben-nhau-202001041030046407.jpg', 1, 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -261,7 +284,7 @@ ALTER TABLE `sanpham`
 -- AUTO_INCREMENT cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `IdHoaDon` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `IdHoaDon` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT cho bảng `loaisanpham`
@@ -273,13 +296,13 @@ ALTER TABLE `loaisanpham`
 -- AUTO_INCREMENT cho bảng `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `id_nguoidung` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_nguoidung` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `MaSP` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `MaSP` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
