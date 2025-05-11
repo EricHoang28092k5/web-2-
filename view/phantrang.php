@@ -58,12 +58,18 @@
 <div class="pagination">
     
 <?php
-$param="";
-if($search){
-    $param ="name=".$search."&";
+$param = "";
+if (!empty($search)) {
+    $param .= "search=" . urlencode($search) . "&";
 }
 if (!empty($maLoaiSP)) {
     $param .= "MaLoaiSP=" . (int)$maLoaiSP . "&";
+}
+if (!empty($min_price)) {
+    $param .= "min_price=" . (int)$min_price . "&";
+}
+if (!empty($max_price)) {
+    $param .= "max_price=" . (int)$max_price . "&";
 }
 
 
