@@ -2,6 +2,11 @@
 session_start();
 include '../model/thuvien.php';
 // Xử lý yêu cầu xóa sản phẩm
+$isLoggedIn = isset($_SESSION['tenDangNhap']);
+if (!$isLoggedIn) {
+    unset($_SESSION['giohang']);
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove_item"])) {
     $id = $_POST["remove_id"];
     unset($_SESSION['giohang'][$id]);
