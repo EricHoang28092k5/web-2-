@@ -1,15 +1,44 @@
 <?php
 session_start();
 include '../model/thuvien.php';
-// Xử lý yêu cầu xóa sản phẩm
+
 $isLoggedIn = isset($_SESSION['tenDangNhap']);
 if (!$isLoggedIn) {
     unset($_SESSION['giohang']);
 }
 
+// Connect to database
+$conn = ketnoidb();
+
+// Check products' status and remove hidden products (TrangThai = 0)
+if (!empty($_SESSION['giohang'])) {
+    foreach ($_SESSION['giohang'] as $key => $product) {
+        $productId = $product[0]; // ID sản phẩm
+        
+        // Query to check product status
+        $checkStatusSql = "SELECT TrangThai FROM sanpham WHERE MaSP = $productId";
+        $statusResult = $conn->query($checkStatusSql);
+        
+        if ($statusResult && $statusResult->num_rows > 0) {
+            $statusRow = $statusResult->fetch_assoc();
+            // If product is hidden (TrangThai = 0), remove from cart
+            if ((int)$statusRow['TrangThai'] === 0) {
+                unset($_SESSION['giohang'][$key]);
+            }
+        }
+    }
+    
+    // Reindex array after removing items
+    if (!empty($_SESSION['giohang'])) {
+        $_SESSION['giohang'] = array_values($_SESSION['giohang']);
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove_item"])) {
     $id = $_POST["remove_id"];
     unset($_SESSION['giohang'][$id]);
+    // Reindex array after removing item
+    $_SESSION['giohang'] = array_values($_SESSION['giohang']);
 }
 
 // Xử lý yêu cầu cập nhật số lượng
@@ -17,8 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_quantity"])) {
     $id = $_POST["product_id"];
     $quantity = (int)$_POST["quantity"];
     
+    // Ensure quantity is positive and within allowed range
     if ($quantity > 0 && $quantity <= 100) {
         $_SESSION['giohang'][$id][4] = $quantity;
+    } else {
+        // If invalid quantity, set to 1
+        $_SESSION['giohang'][$id][4] = 1;
+        $quantity = 1;
     }
     
     // Trả về dữ liệu cập nhật cho AJAX
@@ -27,7 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_quantity"])) {
         $total = $price * $quantity;
         echo json_encode([
             'success' => true,
-            'total' => number_format($total) . " VND"
+            'total' => number_format($total) . " VND",
+            'corrected_quantity' => $quantity
         ]);
         exit;
     }
@@ -65,8 +100,19 @@ include "../view/header.php";
     <link rel="shortcut icon" href="../view/img/DMTD-Food-Logo.jpg" type="image/x-icon" />
     <script>
         function updateTotal(id, price) {
-            let quantity = document.getElementById('quantity-' + id).value;
-            let totalPrice = parseInt(price) * parseInt(quantity);
+            let quantityInput = document.getElementById('quantity-' + id);
+            let quantity = parseInt(quantityInput.value);
+            
+            // Validate quantity input
+            if (isNaN(quantity) || quantity < 1) {
+                quantity = 1;
+                quantityInput.value = 1;
+            } else if (quantity > 100) {
+                quantity = 100;
+                quantityInput.value = 100;
+            }
+            
+            let totalPrice = parseInt(price) * quantity;
             document.getElementById('total-' + id).innerText = totalPrice.toLocaleString() + " VND";
             
             // Cập nhật tổng tiền
@@ -93,6 +139,14 @@ include "../view/header.php";
             .then(data => {
                 if (data.success) {
                     console.log('Đã cập nhật số lượng trong session');
+                    // Update the input value if server corrected the quantity
+                    if (data.corrected_quantity) {
+                        document.getElementById('quantity-' + id).value = data.corrected_quantity;
+                        let price = parseInt(document.getElementById('quantity-' + id).getAttribute('data-price'));
+                        let totalPrice = price * data.corrected_quantity;
+                        document.getElementById('total-' + id).innerText = totalPrice.toLocaleString() + " VND";
+                        updateGrandTotal();
+                    }
                 }
             })
             .catch(error => console.error('Lỗi cập nhật số lượng:', error));
@@ -105,6 +159,16 @@ include "../view/header.php";
                 total += parseInt(element.innerText.replace(/\D/g, '')); 
             });
             document.getElementById("grand-total").innerText = total.toLocaleString() + " VND";
+        }
+        
+        // Add event listener for direct input and validation
+        function validateQuantityInput(input) {
+            let value = parseInt(input.value);
+            if (isNaN(value) || value < 1) {
+                input.value = 1;
+            } else if (value > 100) {
+                input.value = 100;
+            }
         }
     </script>
     <style>
@@ -591,6 +655,17 @@ include "../view/header.php";
             box-shadow: 0 4px 8px rgba(243, 115, 25, 0.3);
         }
 
+        /* Notification for hidden products */
+        .notification {
+            background-color: #fff8f2;
+            border-left: 4px solid #f37319;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            color: #333;
+            font-size: 14px;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .cart-table {
@@ -644,6 +719,19 @@ include "../view/header.php";
     <div class="cart-container">
         <h2 class="cart-title">GIỎ HÀNG CỦA BẠN</h2>
         
+        <?php 
+        // Check if any products were hidden and removed from cart
+        if (isset($_SESSION['hidden_products_removed']) && $_SESSION['hidden_products_removed']): 
+        ?>
+        <div class="notification">
+            <strong>Lưu ý:</strong> Một số sản phẩm đã bị gỡ khỏi giỏ hàng vì không còn khả dụng.
+        </div>
+        <?php 
+        // Reset notification after showing it once
+        unset($_SESSION['hidden_products_removed']); 
+        endif; 
+        ?>
+        
         <?php if (empty($_SESSION['giohang'])): ?>
             <table class="cart-table">
                 <thead>
@@ -684,8 +772,23 @@ include "../view/header.php";
                 <tbody>
                     <?php $totalAmount = 0; ?>
                     <?php foreach ($_SESSION['giohang'] as $id => $product): ?>
-                        <?php $itemTotal = $product[3] * $product[4]; ?>
-                        <?php $totalAmount += $itemTotal; ?>
+                        <?php 
+                        // Double check product status before displaying
+                        $productId = $product[0];
+                        $checkStatusSql = "SELECT TrangThai FROM sanpham WHERE MaSP = $productId";
+                        $statusResult = $conn->query($checkStatusSql);
+                        $isVisible = true;
+                        
+                        if ($statusResult && $statusResult->num_rows > 0) {
+                            $statusRow = $statusResult->fetch_assoc();
+                            $isVisible = ((int)$statusRow['TrangThai'] !== 0);
+                        }
+                        
+                        // Only display if product is visible (TrangThai != 0)
+                        if ($isVisible):
+                            $itemTotal = $product[3] * $product[4];
+                            $totalAmount += $itemTotal;
+                        ?>
                         <tr>
                             <td class="product-name"><?= $product[2] ?></td>
                             <td>
@@ -695,7 +798,9 @@ include "../view/header.php";
                             <td>
                                 <input type="number" id="quantity-<?= $id ?>" class="quantity-input" 
                                     value="<?= $product[4] ?>" min="1" max="100" 
-                                    onchange="updateTotal('<?= $id ?>', '<?= $product[3] ?>')">
+                                    data-price="<?= $product[3] ?>"
+                                    onchange="updateTotal('<?= $id ?>', '<?= $product[3] ?>')"
+                                    oninput="validateQuantityInput(this)">
                             </td>
                             <td id="total-<?= $id ?>" class="item-total"><?= number_format($itemTotal) ?> VND</td>
                             <td>
@@ -707,6 +812,7 @@ include "../view/header.php";
                                 </form>
                             </td>
                         </tr>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                     
                     <!-- Hàng tổng tiền -->
@@ -720,12 +826,12 @@ include "../view/header.php";
             
             <form id="hiddenForm" action="check_order.php" method="post">
                 <!-- Đảm bảo giá trị session được gán đúng cách vào các trường input -->
-                <input type="hidden" name="tenNguoiDung" value="<?php echo $tenNguoiDung; ?>">
-                <input type="hidden" name="email" value="<?php echo $email; ?>">
-                <input type="hidden" name="sdt" value="<?php echo $sdt; ?>">
-                <input type="hidden" name="diaChi" value="<?php echo $diaChi; ?>">
-                <input type="hidden" name="quan_huyen" value="<?php echo $quan_huyen; ?>">
-                <input type="hidden" name="phuong_xa" value="<?php echo $phuong_xa; ?>">
+                <input type="hidden" name="tenNguoiDung" value="<?php echo isset($tenNguoiDung) ? $tenNguoiDung : ''; ?>">
+                <input type="hidden" name="email" value="<?php echo isset($email) ? $email : ''; ?>">
+                <input type="hidden" name="sdt" value="<?php echo isset($sdt) ? $sdt : ''; ?>">
+                <input type="hidden" name="diaChi" value="<?php echo isset($diaChi) ? $diaChi : ''; ?>">
+                <input type="hidden" name="quan_huyen" value="<?php echo isset($quan_huyen) ? $quan_huyen : ''; ?>">
+                <input type="hidden" name="phuong_xa" value="<?php echo isset($phuong_xa) ? $phuong_xa : ''; ?>">
                 
                 <!-- Thêm tổng số tiền -->
                 <input type="hidden" name="totalAmount" value="<?php echo $totalAmount; ?>">
@@ -744,6 +850,16 @@ include "../view/header.php";
             <script>
                 // Cập nhật tổng tiền ban đầu
                 updateGrandTotal();
+                
+                // Add input event listeners to all quantity inputs for real-time validation
+                document.addEventListener('DOMContentLoaded', function() {
+                    const quantityInputs = document.querySelectorAll('.quantity-input');
+                    quantityInputs.forEach(input => {
+                        input.addEventListener('input', function() {
+                            validateQuantityInput(this);
+                        });
+                    });
+                });
             </script>
         <?php endif; ?>
     </div>
